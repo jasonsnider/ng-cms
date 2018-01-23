@@ -9,10 +9,9 @@ import { User } from '../user';
 })
 export class UsersComponent implements OnInit {
 
-  users: User[];
+  users: User;
 
   constructor(private userService: UserService) { }
-
 
   ngOnInit() {
     this.getUsers();
@@ -21,8 +20,7 @@ export class UsersComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers().subscribe(
       users => {
-        this.users = users,
-        console.log(this.users)
+        this.users = users
       }
     );
   }

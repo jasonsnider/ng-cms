@@ -87,14 +87,14 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   //Set up a simple observable.
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url);
+  getUsers(): Observable<User> {
+    return this.http.get<User>(this.url);
   }
 
 }
 ```
 
-*users.component.ts*
+*users/users.component.ts*
 ```js
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
@@ -107,7 +107,7 @@ import { User } from '../user';
 })
 export class UsersComponent implements OnInit {
 
-  users: User[];
+  users: User;
 
   constructor(private userService: UserService) { }
 
@@ -119,11 +119,81 @@ export class UsersComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers().subscribe(
       users => {
-        this.users = users,
-        console.log(this.users)
+        this.users = users
       }
     );
   }
-
 }
 ```
+<<<<<<< HEAD
+=======
+
+Now update the view to reveal the list of users
+*users/users.component.html*
+```html
+<ul *ngIf="users">
+  <li *ngFor="let user of users.users">
+    <a>{{user.username}}</a>
+  </li>
+</ul>
+```
+
+Generate a routing file
+
+```sh
+ng generate module app-routing --flat --module=app
+```
+
+Replace the routing file with the following.
+
+*app-routing.module.ts*
+```js
+import { NgModule }             from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { UsersComponent }   from './users/users.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/users', pathMatch: 'full' },
+  { path: 'users', component: UsersComponent }
+];
+@NgModule({
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
+})
+export class AppRoutingModule {}
+```
+
+Replace the app-users selector with router-outlet
+
+```html
+<router-outlet></router-outlet>
+```
+
+Users gives us a component for dealing with a list of users, now we want to deal with a single user. Add a user-view component.
+```sh
+ng generate component user-view
+```
+
+Add the user-view component to the routing module.
+```js
+...
+import { UserViewComponent }   from './user-view/user-view.component';
+...
+const routes: Routes = [
+  { path: '', redirectTo: '/users', pathMatch: 'full' },
+  { path: 'users', component: UsersComponent },
+  { path: 'users/view', component: UserViewComponent }
+];
+...
+```
+Navigate to [http://localhost:4200/users/view](http://localhost:4200/users/view)
+
+Add a getUser() method to the user service.
+*user.service.ts*
+```js
+getUser(id: string): Observable<User> {
+  return this.http.get<User>(this.url + `/view/${id}`);
+}
+```
+>>>>>>> CRUD

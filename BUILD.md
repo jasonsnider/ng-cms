@@ -1,5 +1,5 @@
-ng generate component users
-ng generate service user --module=app
+* ng generate component users
+* ng generate service user --module=app
 
 Bring the users component into scope
 *app.component.html*
@@ -42,7 +42,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../user';
-import { UserService } from '../user.service';
 
 @Injectable()
 export class UserService {

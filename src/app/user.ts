@@ -1,4 +1,4 @@
-export class Nasa {
+export class User {
   email: string;
   username: string;
   first_name:  string;

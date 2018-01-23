@@ -196,4 +196,3 @@ getUser(id: string): Observable<User> {
   return this.http.get<User>(this.url + `/view/${id}`);
 }
 ```
->>>>>>> CRUD

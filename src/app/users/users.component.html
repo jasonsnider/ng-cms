@@ -1,3 +1,5 @@
-<p>
-  users works!
-</p>
+<ul *ngIf="users">
+  <li *ngFor="let user of users.users">
+    <a>{{user.username}}</a>
+  </li>
+</ul>

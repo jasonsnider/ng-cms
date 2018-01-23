@@ -162,10 +162,30 @@ const routes: Routes = [
 export class AppRoutingModule {}
 ```
 
+Replace the app-users selector with router-outlet
+
+```html
+<router-outlet></router-outlet>
+```
+
 Users gives us a component for dealing with a list of users, now we want to deal with a single user. Add a user-view component.
 ```sh
 ng generate component user-view
 ```
+
+Add the user-view component to the routing module.
+```js
+...
+import { UserViewComponent }   from './user-view/user-view.component';
+...
+const routes: Routes = [
+  { path: '', redirectTo: '/users', pathMatch: 'full' },
+  { path: 'users', component: UsersComponent },
+  { path: 'users/view', component: UserViewComponent }
+];
+...
+```
+Navigate to [http://localhost:4200/users/view](http://localhost:4200/users/view)
 
 Add a getUser() method to the user service.
 *user.service.ts*
@@ -173,10 +193,4 @@ Add a getUser() method to the user service.
 getUser(id: string): Observable<User> {
   return this.http.get<User>(this.url + `/view/${id}`);
 }
-```
-
-Replace the app-users selector with router-outlet
-
-```html
-<router-outlet></router-outlet>
 ```

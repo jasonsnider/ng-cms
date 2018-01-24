@@ -125,8 +125,6 @@ export class UsersComponent implements OnInit {
   }
 }
 ```
-<<<<<<< HEAD
-=======
 
 Now update the view to reveal the list of users
 *users/users.component.html*
@@ -170,6 +168,8 @@ Replace the app-users selector with router-outlet
 <router-outlet></router-outlet>
 ```
 
+## View a single user
+
 Users gives us a component for dealing with a list of users, now we want to deal with a single user. Add a user-view component.
 ```sh
 ng generate component user-view
@@ -183,11 +183,22 @@ import { UserViewComponent }   from './user-view/user-view.component';
 const routes: Routes = [
   { path: '', redirectTo: '/users', pathMatch: 'full' },
   { path: 'users', component: UsersComponent },
-  { path: 'users/view', component: UserViewComponent }
+  { path: 'users/view/:id', component: UserViewComponent }
 ];
 ...
 ```
 Navigate to [http://localhost:4200/users/view](http://localhost:4200/users/view)
+
+Now add a routerLink to your list of users. Use commas to concatenate strings and variables.
+
+*users/users.component.html*
+```html
+<ul *ngIf="users">
+  <li *ngFor="let user of users.users">
+    <a [routerLink]="['/users/view/', user._id]">{{user.username}}</a>
+  </li>
+</ul>
+```
 
 Add a getUser() method to the user service.
 *user.service.ts*
@@ -196,3 +207,98 @@ getUser(id: string): Observable<User> {
   return this.http.get<User>(this.url + `/view/${id}`);
 }
 ```
+*user-view/user-view.component.ts*
+```js
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
+import { User } from '../user';
+
+@Component({
+  selector: 'app-user-view',
+  templateUrl: './user-view.component.html',
+  styleUrls: ['./user-view.component.css']
+})
+export class UserViewComponent implements OnInit {
+
+  user: User;
+
+  constructor(private userService: UserService) { }
+
+  ngOnInit() {
+    //choose a user id from your database
+    this.getUser('5a612a1b9ee8892feae1b40e');
+  }
+
+  getUser(id): void {
+    this.userService.getUser(id).subscribe(
+      user => {
+        this.user = user
+      }
+    );
+  }
+}
+```
+
+*user-view/user-view.component.html*
+```html
+<div *ngIf="user">
+  <h1>{{user.user.first_name}} {{user.user.last_name}}</h1>
+  <div><strong>Username:</strong> {{user.user.username}}</div>
+  <div><strong>Email:</strong> {{user.user.email}}</div>
+</div>
+```
+
+*/user-view.component.ts*
+Import ActivatedRoute and inject it into the constructor
+```js
+import { ActivatedRoute } from '@angular/router';
+```
+
+```js
+constructor(
+  private route: ActivatedRoute,
+  private userService: UserService
+) { }
+```
+
+Implement the details
+```js
+ngOnInit() {
+  //Grab the URL from the activated route
+  const id = this.route.snapshot.paramMap.get('id');
+  this.getUser(id);
+}
+
+getUser(id): void {
+  this.userService.getUser(id).subscribe(
+    user => {
+      this.user = user
+    }
+  );
+}
+```
+
+At this point returning to navigating to [https://localhost:4200](https://localhost:4200) and clicking on a user will show you a view of that user.
+
+## Create a user
+
+```sh
+ng generate component user-create
+```
+
+Add a route
+
+```js
+...
+import { UserCreateComponent }   from './user-create/user-create.component';
+...
+const routes: Routes = [
+  { path: '', redirectTo: '/users', pathMatch: 'full' },
+  { path: 'users', component: UsersComponent },
+  { path: 'users/view/:id', component: UserViewComponent },
+  { path: 'users/create', component: UserCreateComponent }
+];
+...
+```
+
+Navigate to [http://localhost:4200/users/create](http://localhost:4200/users/create) and you'll see the message "user-create works!"

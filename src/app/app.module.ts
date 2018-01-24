@@ -7,13 +7,15 @@ import { UsersComponent } from './users/users.component';
 import { UserService } from './user.service';
 import { UserViewComponent } from './user-view/user-view.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { UserCreateComponent } from './user-create/user-create.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    UserViewComponent
+    UserViewComponent,
+    UserCreateComponent
   ],
   imports: [
     BrowserModule,

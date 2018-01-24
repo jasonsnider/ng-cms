@@ -2,4 +2,6 @@
   <h1>{{user.user.first_name}} {{user.user.last_name}}</h1>
   <div><strong>Username:</strong> {{user.user.username}}</div>
   <div><strong>Email:</strong> {{user.user.email}}</div>
+  <a [routerLink]="['/users/edit/', user.user._id]">edit</a>
+  <a href="#" (click)="deleteUser(user.user._id)">delete</a>
 </div>

@@ -399,7 +399,7 @@ export class UserCreateComponent implements OnInit {
 
     if(response.success===true){
       this.router.navigate(['/users/view/', response.user._id]);
-    }
+    }ng generate component user-edit
   }
 
   onSubmit(): void {
@@ -429,3 +429,26 @@ export class UserService {
 
 }
 ```
+
+## Edit User
+
+```sh
+ng generate component user-edit
+```
+
+*app-routing.module.ts*
+```js
+...
+import { UserEditComponent }   from './user-edit/user-edit.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/users', pathMatch: 'full' },
+  { path: 'users', component: UsersComponent },
+  { path: 'users/view/:id', component: UserViewComponent },
+  { path: 'users/create', component: UserCreateComponent }
+  { path: 'users/edit/:id', component: UserEditComponent }
+];
+...
+```
+
+Navigate to [http://localhost:4200/users/edit/5a5e285039084a199e4515f9](http://localhost:4200/users/edit/5a5e285039084a199e4515f9), I opened a contact view and changed the word view to edit in the url.

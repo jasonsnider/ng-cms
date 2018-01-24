@@ -7,8 +7,9 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { UserService } from './user.service';
 import { UserViewComponent } from './user-view/user-view.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { UserCreateComponent } from './user-create/user-create.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { UserCreateComponent } from './user-create/user-create.component';
     AppComponent,
     UsersComponent,
     UserViewComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

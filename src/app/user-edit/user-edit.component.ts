@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user.service';
 import { User } from '../user';
 
 @Component({
-  selector: 'app-user-create',
-  templateUrl: './user-create.component.html',
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
   styleUrls: [
     '../app.component.scss',
-    './user-create.component.scss'
+    './user-edit.component.scss'
   ]
 })
-export class UserCreateComponent implements OnInit {
+export class UserEditComponent implements OnInit {
 
-  user = new User();
+  user: User;
 
   errors = [
     'message':'';
@@ -23,13 +24,26 @@ export class UserCreateComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private route: ActivatedRoute,
     private router: Router
 
   ) { }
 
-  ngOnInit(): void{}
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.getUser(id);
+  }
+
+  getUser(id): void {
+    this.userService.getUser(id).subscribe(
+      user => {
+        this.user = user.user
+      }
+    );
+  }
 
   response(response): void{
+
     if(response.success===false){
       this.errors = response.errors.errors;
       this.errors.message = response.errors.message;
@@ -42,7 +56,7 @@ export class UserCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.userService.createUser(this.user).subscribe(
+    this.userService.editUser(this.user).subscribe(
       (response) => {this.response(response)}
     );
   }

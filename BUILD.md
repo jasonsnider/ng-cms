@@ -248,17 +248,17 @@ export class UserViewComponent implements OnInit {
   <div><strong>Email:</strong> {{user.user.email}}</div>
 </div>
 ```
-
+One
 */user-view.component.ts*
 Import ActivatedRoute and inject it into the constructor
 ```js
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/rOneouter';
 ```
 
 ```js
 constructor(
   private route: ActivatedRoute,
-  private userService: UserService
+  private userService: UserServiceOne
 ) { }
 ```
 
@@ -303,3 +303,129 @@ const routes: Routes = [
 ```
 
 Navigate to [http://localhost:4200/users/create](http://localhost:4200/users/create) and you'll see the message "user-create works!"
+
+Since we are creating a user we will want to work with NgForms. Import the FormsModule into AppModule then import NgForm into the user-create component.
+
+*app.module.js*
+
+```js
+...
+import { FormsModule }   from '@angular/forms';
+...
+
+  ...
+  imports: [
+    ...
+    FormsModule
+  ]
+  ...
+
+```
+
+*user-create/user-create.component.ts*
+```js
+import { NgForm } from '@angular/forms';
+```
+
+Then add a form to the user-create view. We want will bind the form the ngSubmit.
+
+*user-create/user-create.component.html*
+```html
+<h1>Create a New User</h1>
+
+<form (ngSubmit)="onSubmit()" #createUser="ngForm">
+  <div *ngIf="errors.message" class="alert error">{{errors._message}}</div>
+  <div>
+    <label for="username">Username</label>
+    <input [(ngModel)]="user.username" type="text" id="username" [ngModelOptions]="{standalone: true}">
+    <div class="error" *ngIf="errors.username">{{errors.username.message}}</div>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input [(ngModel)]="user.email" type="text" id="email" [ngModelOptions]="{standalone: true}">
+    <div class="error" *ngIf="errors.email">{{errors.email.message}}</div>
+  </div>
+
+  <div>
+    <label for="first_name">First Name</label>
+    <input [(ngModel)]="user.first_name" type="text" name="first_name" id="first_name" [ngModelOptions]="{standalone: true}">
+    <div class="error" *ngIf="errors.first_name">{{errors.first_name.message}}</div>
+  </div>
+
+  <div>
+    <label for="last_name">Last Name</label>
+    <input [(ngModel)]="user.last_name" type="text" id="last_name" [ngModelOptions]="{standalone: true}">
+    <div class="error" *ngIf="errors.last_name">{{errors.last_name.message}}</div>
+  </div>
+  <button type="submit">Submit</button>
+
+</form>
+```
+
+*user-create/user-create.component.ts*
+```js
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import {Router} from "@angular/router";
+
+import { UserService } from '../user.service';
+import { User } from '../user';
+
+@Component({
+  selector: 'app-user-create',
+  templateUrl: './user-create.component.html',
+  styleUrls: ['./user-create.component.scss']
+})
+export class UserCreateComponent implements OnInit {
+
+  user = new User();
+  errors = [];
+
+  constructor(
+    private userService: UserService,
+    private router: Router
+
+  ) { }
+
+  ngOnInit(): void{}
+
+  response(response): void{
+    if(response.success===false){
+      this.errors = response.errors.errors;
+      this.errors.message = response.errors.message;
+      this.errors._message = response.errors._message;
+    }
+
+    if(response.success===true){
+      this.router.navigate(['/users/view/', response.user._id]);
+    }
+  }
+
+  onSubmit(): void {
+    this.userService.createUser(this.user).subscribe(
+      (response) => {this.response(response)}
+    );
+  }
+
+}
+```
+
+*user.service.ts*
+```js
+...
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+@Injectable()
+export class UserService {
+
+...
+
+  createUser (user: User): Observable<User> {
+    return this.http.post<User>(this.url + '/create',user, httpOptions);
+  }
+
+}
+```

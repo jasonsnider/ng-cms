@@ -18,8 +18,8 @@ export class UserEditComponent implements OnInit {
 
   user: User;
 
-  errors = [
-    'message':'';
+  errors:[] = [
+    'message':''
   ];
 
   constructor(
@@ -46,8 +46,11 @@ export class UserEditComponent implements OnInit {
 
     if(response.success===false){
       this.errors = response.errors.errors;
-      this.errors.message = response.errors.message;
-      this.errors._message = response.errors._message;
+      if(this.errors.message){
+        this.errors.message = response.errors.message;
+        this.errors._message = response.errors._message;
+      }
+
     }
 
     if(response.success===true){

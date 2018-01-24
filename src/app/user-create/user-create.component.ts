@@ -17,8 +17,8 @@ export class UserCreateComponent implements OnInit {
 
   user = new User();
 
-  errors = [
-    'message':'';
+  errors:[] = [
+    'message':''
   ];
 
   constructor(

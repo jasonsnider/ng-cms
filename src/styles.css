@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+main {
+  width: 600px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+label,
+input{
+  display:block;
+  width: 100%;
+}
+
+input{
+  padding: .5rem;
+  border: 1px solid #999;
+  margin: 0 0 1rem;
+}

@@ -8,7 +8,10 @@ import { User } from '../user';
 @Component({
   selector: 'app-user-create',
   templateUrl: './user-create.component.html',
-  styleUrls: ['./user-create.component.scss']
+  styleUrls: [
+    '../app.component.scss',
+    './user-create.component.scss'
+  ]
 })
 export class UserCreateComponent implements OnInit {
 

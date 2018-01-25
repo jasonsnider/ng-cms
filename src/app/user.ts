@@ -6,4 +6,5 @@ export class User {
   last_name:  string;
   admin: boolean;
   user: any;
+  users: any;
 }

@@ -27,7 +27,7 @@ export class PostViewComponent implements OnInit {
 
   getPost(slug): void {
     this.postService.getPost(slug).subscribe(
-      post => this.post = post
+      post => this.post = post.post
     );
   }
 

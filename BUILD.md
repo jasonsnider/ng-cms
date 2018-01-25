@@ -26,7 +26,8 @@ ng new ng-cms
 
 Create the users component
 ```sh
-ng generate component users
+ng generate component users# Scheams and Services
+
 ```
 
 Create the user service

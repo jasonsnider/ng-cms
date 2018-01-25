@@ -28,8 +28,8 @@ export class UserCreateComponent implements OnInit {
 
   response(response): void{
     if(response.success===false){
-      this.errors = response.error.errors;
-      this.errorMessage = response.error.message;
+      this.errors = response.errors.errors;
+      this.errorMessage = response.errors.message;
     }
 
     if(response.success===true){
@@ -39,7 +39,10 @@ export class UserCreateComponent implements OnInit {
 
   onSubmit(): void {
     this.userService.createUser(this.user).subscribe(
-      (response) => {this.response(response)}
+      (response) => {
+        console.log(response);
+        this.response(response)
+      }
     );
   }
 

@@ -1,9 +1,12 @@
 <div *ngIf="post">
+
   <h1>{{post.post.title}}</h1>
+
   <div>{{post.post.published | date:medium}}</div>
 
   <div>{{post.post.body}}</div>
 
-  <a [routerLink]="['/posts/edit/', post.post.slug]">edit</a>
-  <a href="#" (click)="deletePost(post.post._id)">delete</a>
+  <button [routerLink]="['/posts/edit/', post.post.slug]">edit</button>
+  <button (click)="deletePost(post.post._id)">delete</button>
+
 </div>

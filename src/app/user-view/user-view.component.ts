@@ -32,9 +32,11 @@ export class UserViewComponent implements OnInit {
   }
 
   deleteUser(id: string): void {
-    this.userService.deleteUser(id).subscribe(
-      ()=>{this.router.navigate(['/users'])}
-    );
+    if(confirm("Are you sure to delete " + this.user.user.username)) {
+      this.userService.deleteUser(id).subscribe(
+        ()=>{this.router.navigate(['/users'])}
+      );
+    }
   }
 
 }

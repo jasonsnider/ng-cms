@@ -32,9 +32,11 @@ export class PostViewComponent implements OnInit {
   }
 
   deletePost(id: string): void {
-    this.postService.deletePost(id).subscribe(
-      ()=>{this.router.navigate(['/posts'])}
-    );
+    if(confirm("Are you sure to delete " + this.post.post.title)) {
+      this.postService.deletePost(id).subscribe(
+        ()=>{this.router.navigate(['/posts'])}
+      );
+    }
   }
 
 }

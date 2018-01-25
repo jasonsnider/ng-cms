@@ -3,25 +3,25 @@ import { NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
 import { ActivatedRoute } from '@angular/router';
 
-import { UserService } from '../user.service';
-import { User } from '../user';
+import { PostService } from '../post.service';
+import { Post } from '../post';
 
 @Component({
-  selector: 'app-user-edit',
-  templateUrl: './user-edit.component.html',
+  selector: 'app-post-edit',
+  templateUrl: './post-edit.component.html',
   styleUrls: [
     '../app.component.scss',
-    './user-edit.component.scss'
+    './post-edit.component.css'
   ]
 })
-export class UserEditComponent implements OnInit {
+export class PostEditComponent implements OnInit {
 
-  user: User;
+  post: Post;
   errors: Array<any> = [];
   errorMessage: string;
 
   constructor(
-    private userService: UserService,
+    private postService: PostService,
     private route: ActivatedRoute,
     private router: Router
 
@@ -29,29 +29,28 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.getUser(id);
+    this.getPost(id);
   }
 
-  getUser(id): void {
-    this.userService.getUser(id).subscribe(
-      user => this.user = user.user
+  getPost(slug): void {
+    this.postService.getPost(slug).subscribe(
+      post => this.post = post.post
     );
   }
 
   response(response): void{
-            console.log(response)
     if(response.success===false){
       this.errors = response.error.errors;
       this.errorMessage = response.error.message;
     }
 
     if(response.success===true){
-      this.router.navigate(['/users/view/', response.user._id]);
+      this.router.navigate(['/posts/view/', response.post.slug]);
     }
   }
 
   onSubmit(): void {
-    this.userService.editUser(this.user).subscribe(
+    this.postService.editPost(this.post).subscribe(
       (response) => {
         this.response(response)
       }

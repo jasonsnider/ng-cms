@@ -27,15 +27,13 @@ export class UserViewComponent implements OnInit {
 
   getUser(id): void {
     this.userService.getUser(id).subscribe(
-      user => {
-        this.user = user
-      }
+      user => this.user = user
     );
   }
 
   deleteUser(id: string): void {
     this.userService.deleteUser(id).subscribe(
-      this.router.navigate(['/users'])
+      ()=>{this.router.navigate(['/users'])}
     );
   }
 

@@ -2,25 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
 
-import { UserService } from '../user.service';
-import { User } from '../user';
+import { PostService } from '../post.service';
+import { Post } from '../post';
 
 @Component({
-  selector: 'app-user-create',
-  templateUrl: './user-create.component.html',
+  selector: 'app-post-create',
+  templateUrl: './post-create.component.html',
   styleUrls: [
     '../app.component.scss',
-    './user-create.component.scss'
+    './post-create.component.css'
   ]
 })
-export class UserCreateComponent implements OnInit {
+export class PostCreateComponent implements OnInit {
 
-  user = new User();
+  post = new Post();
   errors: Array<any> = [];
   errorMessage: string;
 
   constructor(
-    private userService: UserService,
+    private postService: PostService,
     private router: Router
   ) { }
 
@@ -33,12 +33,12 @@ export class UserCreateComponent implements OnInit {
     }
 
     if(response.success===true){
-      this.router.navigate(['/users/view/', response.user._id]);
+      this.router.navigate(['/posts/view/', response.post._id]);
     }
   }
 
   onSubmit(): void {
-    this.userService.createUser(this.user).subscribe(
+    this.postService.createPost(this.post).subscribe(
       (response) => {this.response(response)}
     );
   }

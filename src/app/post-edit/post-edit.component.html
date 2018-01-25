@@ -1,0 +1,35 @@
+<h1 *ngIf="post">Edit {{post.title}}</h1>
+
+<form *ngIf="post" (ngSubmit)="onSubmit()" #editPost="ngForm">
+  <div *ngIf="errorMessage" class="alert error">{{errorMessage}}</div>
+
+  <input [(ngModel)]="post._id" type="text" id="_id" [ngModelOptions]="{standalone: true}">
+
+  <div>
+    <label for="title">Title</label>
+    <input [(ngModel)]="post.title" type="text" id="title" [ngModelOptions]="{standalone: true}">
+    <div class="error" *ngIf="errors.title">{{errors.title.message}}</div>
+  </div>
+
+  <div>
+    <label for="body">Body</label>
+    <textarea [(ngModel)]="post.body" rows="5" type="text" id="body" [ngModelOptions]="{standalone: true}"></textarea>
+    <div class="error" *ngIf="errors.body">{{errors.body.message}}</div>
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <textarea [(ngModel)]="post.description" rows="5" type="text" id="body" [ngModelOptions]="{standalone: true}"></textarea>
+    <div class="error" *ngIf="errors.description">{{errors.description.message}}</div>
+  </div>
+
+  <div>
+    <label for="keywords">Keywords</label>
+    <textarea [(ngModel)]="post.keywords" rows="5" type="text" id="keywords" [ngModelOptions]="{standalone: true}"></textarea>
+    <div class="error" *ngIf="errors.keywords">{{errors.keywords.message}}</div>
+  </div>
+
+
+  <button type="submit">Submit</button>
+
+</form>

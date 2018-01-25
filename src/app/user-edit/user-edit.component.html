@@ -1,7 +1,7 @@
 <h1 *ngIf="user">Edit {{user.first_name}} {{user.last_name}}</h1>
 
-<form *ngIf="user" (ngSubmit)="onSubmit()" #createUser="ngForm">
-  <div *ngIf="errors.message" class="alert error">{{errors._message}}</div>
+<form *ngIf="user" (ngSubmit)="onSubmit()" #editUser="ngForm">
+  <div *ngIf="errorMessage" class="alert error">{{errorMessage}}</div>
 
   <input [(ngModel)]="user._id" type="text" id="_id" [ngModelOptions]="{standalone: true}">
 

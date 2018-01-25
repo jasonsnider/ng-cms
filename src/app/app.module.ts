@@ -10,6 +10,11 @@ import { UserViewComponent } from './user-view/user-view.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { PostsComponent } from './posts/posts.component';
+import { PostService } from './post.service';
+import { PostCreateComponent } from './post-create/post-create.component';
+import { PostViewComponent } from './post-view/post-view.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
 
 
 @NgModule({
@@ -18,7 +23,11 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     UsersComponent,
     UserViewComponent,
     UserCreateComponent,
-    UserEditComponent
+    UserEditComponent,
+    PostsComponent,
+    PostCreateComponent,
+    PostViewComponent,
+    PostEditComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +35,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

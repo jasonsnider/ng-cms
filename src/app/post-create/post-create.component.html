@@ -1,0 +1,13 @@
+<h1>Create a New Post</h1>
+
+<form (ngSubmit)="onSubmit()" #createUser="ngForm">
+  <div *ngIf="errorMessage" class="alert error">{{errorMessage}}</div>
+  <div>
+    <label for="title">Title</label>
+    <input [(ngModel)]="post.title" type="text" id="title" [ngModelOptions]="{standalone: true}">
+    <div class="error" *ngIf="errors.title">{{errors.title.message}}</div>
+  </div>
+
+  <button type="submit">Submit</button>
+
+</form>

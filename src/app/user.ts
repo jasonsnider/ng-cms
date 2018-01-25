@@ -5,5 +5,5 @@ export class User {
   first_name:  string;
   last_name:  string;
   admin: boolean;
-  githubData: object;
+  user: any;
 }

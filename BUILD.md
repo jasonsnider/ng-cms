@@ -452,3 +452,47 @@ const routes: Routes = [
 ```
 
 Navigate to [http://localhost:4200/users/edit/5a5e285039084a199e4515f9](http://localhost:4200/users/edit/5a5e285039084a199e4515f9), I opened a contact view and changed the word view to edit in the url.
+
+## Managing Blog Posts
+
+```sh
+ng generate component posts
+```
+
+Update the routing file.
+```js
+...
+import { PostComponent }   from './posts/posts.component';
+...
+{ path: 'posts', component: PostsComponent },
+```
+
+Generate the post service
+```sh
+ng generate service post --module=app
+```
+
+Create the post.ts schema file.
+
+```sh
+ng generate component post-create
+
+```
+
+Update the routing file.
+```js
+...
+import { PostCreateComponent }   from './post-create/post-create.component';
+...
+{ path: 'posts/create', component: PostCreateComponent },
+```
+
+Craete a post view
+```sh
+ng generate component post-view
+
+```
+
+create post-view
+
+create post-edit
